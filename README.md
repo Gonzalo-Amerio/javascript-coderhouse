@@ -1,1 +1,5 @@
-Programa simple que calcula el metabolismo basal
+Primer pre-entrega de proyecto
+
+-------------------------------
+
+Programa que calcula el metabolismo basal
