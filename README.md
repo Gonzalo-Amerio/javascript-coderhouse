@@ -1,5 +1,5 @@
-Primer pre-entrega de proyecto
+Segunda pre-entrega de proyecto
 
 -------------------------------
 
-Programa que calcula el metabolismo basal
+Programa que calcula el metabolismo basal y almacena usuarios 
