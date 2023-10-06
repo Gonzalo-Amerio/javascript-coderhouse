@@ -13,7 +13,7 @@ function calcularMetabolismoBasal(usuario) {
     return 88.362 + 13.397 * usuario.peso + 4.799 * usuario.altura - 5.677 * usuario.edad;
   } else if (usuario.genero === "mujer") {
     return 447.593 + 9.247 * usuario.peso + 3.098 * usuario.altura - 4.330 * usuario.edad;
-  }
+  } 
 }
 
 const nombre = document.getElementById("nombre");
