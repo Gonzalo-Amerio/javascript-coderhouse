@@ -78,3 +78,46 @@ document.addEventListener("DOMContentLoaded", function () {
     mostrarUsuarios();
   });
 });
+document.addEventListener('DOMContentLoaded', function () {
+  
+
+function obtenerInformacionNutricional(nombreAlimento) {
+  const appId = 'b4f92dda';
+  const appKey = 'cbed25e132675463f3d6becc7eee22ea';
+  const url = `https://api.edamam.com/api/nutrition-details?app_id=${appId}&app_key=${appKey}&beta=true`;
+
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`No se pudo realizar la solicitud a la API (${response.status})`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+}
+
+
+document.getElementById('buscarAlimento').addEventListener('click', async function () {
+  const nombreAlimento = document.getElementById('nombreAlimento').value;
+
+  try {
+    const informacionNutricional = await obtenerInformacionNutricional(nombreAlimento);
+    
+    const resultadoNutricional = document.getElementById('resultadoNutricional');
+    resultadoNutricional.innerHTML = `Información Nutricional para ${nombreAlimento}:<br>
+      Calorías: ${Math.round(informacionNutricional.calories)}<br>
+      Proteínas: ${Math.round(informacionNutricional.totalNutrients.PROCNT.quantity)}${informacionNutricional.totalNutrients.PROCNT.unit}<br>
+      Carbohidratos: ${Math.round(informacionNutricional.totalNutrients.CHOCDF.quantity)}${informacionNutricional.totalNutrients.CHOCDF.unit}<br>
+      Grasas: ${Math.round(informacionNutricional.totalNutrients.FAT.quantity)}${informacionNutricional.totalNutrients.FAT.unit}`;
+  } catch (error) {
+    // Maneja errores, por ejemplo, si no se encuentra información sobre el alimento
+    const resultadoNutricional = document.getElementById('resultadoNutricional');
+    resultadoNutricional.innerHTML = `No se encontró información nutricional para ${nombreAlimento}.`;
+    console.error('Error en la solicitud a la API de Edamam:', error);
+  }
+});});

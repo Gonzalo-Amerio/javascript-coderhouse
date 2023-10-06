@@ -1,5 +1,5 @@
-Tercer pre-entrega de proyecto
+Proyecto final
 
 -------------------------------
 
-Programa que calcula el metabolismo basal y almacena usuarios ahora con dom incluido
+Calculadora de metabolismo basal y comidas
