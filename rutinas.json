@@ -1,0 +1,136 @@
+{
+    "rutinas": [
+      {
+        "nombre": "Weider",
+        "descripcion": "Rutina Weider de ejemplo.",
+        "dias": [
+          "Lunes (Pecho y Tríceps)",
+          "Martes (Espalda y Bíceps)",
+          "Miércoles (Piernas)",
+          "Jueves (Hombros)",
+          "Viernes (Descanso)",
+          "Sábado (Descanso)",
+          "Domingo (Descanso)"
+        ],
+        "ejercicios": [
+          {
+            "dia": "Lunes (Pecho y Tríceps)",
+            "ejercicio": "Press de banca",
+            "series": 3,
+            "repeticiones": 12
+          },
+          {
+            "dia": "Lunes (Pecho y Tríceps)",
+            "ejercicio": "Fondos en máquina",
+            "series": 3,
+            "repeticiones": 10
+          },
+          
+          
+          {
+            "dia": "Martes (Espalda y Bíceps)",
+            "ejercicio": "Dominadas",
+            "series": 3,
+            "repeticiones": 10
+          },
+          {
+            "dia": "Martes (Espalda y Bíceps)",
+            "ejercicio": "Curl de bíceps con barra",
+            "series": 3,
+            "repeticiones": 12
+          }
+          
+          
+          
+        ]
+      },
+      {
+        "nombre": "Push-Pull-Legs (PPL)",
+        "descripcion": "Rutina Push-Pull-Legs (PPL) de ejemplo.",
+        "dias": [
+          "Lunes (Empuje)",
+          "Miércoles (Tirón)",
+          "Viernes (Piernas)",
+          "Sábado (Descanso)",
+          "Domingo (Descanso)",
+          "Lunes (Descanso)",
+          "Martes (Descanso)"
+        ],
+        "ejercicios": [
+          {
+            "dia": "Lunes (Empuje)",
+            "ejercicio": "Press de banca",
+            "series": 4,
+            "repeticiones": 8
+          },
+          {
+            "dia": "Lunes (Empuje)",
+            "ejercicio": "Press de hombros",
+            "series": 4,
+            "repeticiones": 10
+          },
+          
+          
+          {
+            "dia": "Miércoles (Tirón)",
+            "ejercicio": "Dominadas",
+            "series": 4,
+            "repeticiones": 10
+          },
+          {
+            "dia": "Miércoles (Tirón)",
+            "ejercicio": "Curl de bíceps con barra",
+            "series": 4,
+            "repeticiones": 12
+          }
+          
+          
+          
+        ]
+      },
+      {
+        "nombre": "Arnold",
+        "descripcion": "Rutina Arnold de ejemplo.",
+        "dias": [
+          "Lunes (Pecho y Tríceps)",
+          "Miércoles (Espalda y Bíceps)",
+          "Viernes (Hombros)",
+          "Sábado (Piernas)",
+          "Domingo (Descanso)",
+          "Lunes (Descanso)",
+          "Martes (Descanso)"
+        ],
+        "ejercicios": [
+          {
+            "dia": "Lunes (Pecho y Tríceps)",
+            "ejercicio": "Press de banca inclinado",
+            "series": 4,
+            "repeticiones": 8
+          },
+          {
+            "dia": "Lunes (Pecho y Tríceps)",
+            "ejercicio": "Fondos en paralelas",
+            "series": 4,
+            "repeticiones": 10
+          },
+          
+          
+          {
+            "dia": "Miércoles (Espalda y Bíceps)",
+            "ejercicio": "Pull-ups",
+            "series": 4,
+            "repeticiones": 10
+          },
+          {
+            "dia": "Miércoles (Espalda y Bíceps)",
+            "ejercicio": "Curl de martillo",
+            "series": 4,
+            "repeticiones": 12
+          }
+          
+          
+        ]
+      }
+    ]
+  }
+  

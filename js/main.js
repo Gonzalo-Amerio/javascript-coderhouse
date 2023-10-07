@@ -29,7 +29,6 @@ function agregarUsuario() {
   const pesoValue = parseFloat(peso.value);
   const alturaValue = parseFloat(altura.value);
 
-  
   const nombreValido = /^[a-zA-Z]+$/.test(nombreValue);
 
   if (nombreValido) {
@@ -49,7 +48,6 @@ function agregarUsuario() {
     document.getElementById("peso").value = "";
     document.getElementById("altura").value = "";
   } else {
-    
     const resultadoElement = document.getElementById("resultado");
     resultadoElement.innerHTML = "Por favor, ingrese un nombre válido (solo caracteres).";
   }
@@ -83,64 +81,54 @@ document.addEventListener("DOMContentLoaded", function () {
   mostrarUsuariosButton.addEventListener("click", function () {
     mostrarUsuarios();
   });
-});
 
-const rutinasJSON = {
-  rutinas: [
-    {
-      nombre: "Rutina Weider",
-      descripcion: "Una rutina de entrenamiento clásica que se centra en grupos musculares específicos en días separados.",
-      dias: ["Lunes - Pecho", "Martes - Espalda", "Miércoles - Piernas", "Jueves - Hombros", "Viernes - Brazos"],
-    },
-    {
-      nombre: "Rutina Push Pull Legs",
-      descripcion: "Una rutina que divide los ejercicios en empuje, tracción y piernas.",
-      dias: ["Lunes - Empuje", "Miércoles - Tracción", "Viernes - Piernas"],
-    },
-    {
-      nombre: "Rutina Arnold",
-      descripcion: "Una rutina de entrenamiento diseñada por Arnold Schwarzenegger.",
-      dias: ["Lunes - Pecho y Espalda", "Martes - Piernas y Hombros", "Miércoles - Descanso", "Jueves - Brazos y Espalda", "Viernes - Piernas y Hombros", "Sábado - Pecho y Brazos", "Domingo - Descanso"],
-    },
-  ],
-};
+  // Agregar aquí el código para cargar y mostrar rutinas aleatorias
+  const cargarRutinaButton = document.getElementById("cargarRutinaButton");
+  const rutinaInfo = document.getElementById("rutinaInfo");
+  let rutinas = [];
+  let rutinaActualIndex = -1;
 
-let rutinaActualIndex = 0; 
+  cargarRutinaButton.addEventListener("click", function () {
+    if (rutinas.length === 0 || rutinaActualIndex === rutinas.length - 1) {
+      fetch("./rutinas.json")
+        .then((response) => response.json())
+        .then((data) => {
+          rutinas = data.rutinas;
+          mostrarRutinaAleatoria();
+        })
+        .catch((error) => {
+          console.error("Error al cargar las rutinas:", error);
+        });
+    } else {
+      mostrarRutinaAleatoria();
+    }
+  });
 
-function mostrarRutina(index) {
-  const rutinaContainer = document.getElementById("rutinaContainer");
-  const rutinaActual = rutinasJSON.rutinas[index];
+  function mostrarRutinaAleatoria() {
+    if (rutinas.length > 0) {
+      rutinaActualIndex = getRandomInt(0, rutinas.length - 1);
+      const rutinaActual = rutinas[rutinaActualIndex];
+      mostrarRutina(rutinaActual);
+    } else {
+      rutinaInfo.textContent = "No hay rutinas disponibles.";
+    }
+  }
 
-  if (rutinaActual) {
-    const rutinaHTML = `
-      <h3 class="font-semibold text-lg mt-2">${rutinaActual.nombre}</h3>
-      <p>${rutinaActual.descripcion}</p>
-      <ul>
-        ${rutinaActual.dias.map((dia) => `<li>${dia}</li>`).join("")}
-      </ul>
+  function mostrarRutina(rutina) {
+    rutinaInfo.innerHTML = `
+      <h2>Nombre de la rutina: ${rutina.nombre}</h2>
+      <p>Descripción: ${rutina.descripcion}</p>
+      <p>Días:</p>
+      <ul>${rutina.dias.map((dia) => `<li>${dia}</li>`).join("")}</ul>
+      <!-- Agrega más información de la rutina según tu formato -->
     `;
-
-    rutinaContainer.innerHTML = rutinaHTML;
-  } else {
-    rutinaContainer.innerHTML = "No hay más rutinas.";
   }
-}
 
-
-mostrarRutina(rutinaActualIndex);
-
-document.getElementById("mostrarRutinaAnterior").addEventListener("click", () => {
-  rutinaActualIndex--;
-  if (rutinaActualIndex < 0) {
-    rutinaActualIndex = rutinasJSON.rutinas.length - 1;
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  mostrarRutina(rutinaActualIndex);
 });
 
-document.getElementById("mostrarSiguienteRutina").addEventListener("click", () => {
-  rutinaActualIndex++;
-  if (rutinaActualIndex >= rutinasJSON.rutinas.length) {
-    rutinaActualIndex = 0;
-  }
-  mostrarRutina(rutinaActualIndex);
-});
+
