@@ -87,9 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const rutinaInfo = document.getElementById("rutinaInfo");
   let rutinas = [];
   let rutinaActualIndex = -1;
-
+  
   cargarRutinaButton.addEventListener("click", function () {
     if (rutinas.length === 0 || rutinaActualIndex === rutinas.length - 1) {
+      
       fetch("./rutinas.json")
         .then((response) => response.json())
         .then((data) => {
@@ -103,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
       mostrarRutinaAleatoria();
     }
   });
-
+  
   function mostrarRutinaAleatoria() {
     if (rutinas.length > 0) {
       rutinaActualIndex = getRandomInt(0, rutinas.length - 1);
@@ -113,22 +114,35 @@ document.addEventListener("DOMContentLoaded", function () {
       rutinaInfo.textContent = "No hay rutinas disponibles.";
     }
   }
-
+  
   function mostrarRutina(rutina) {
+    
+    const ejerciciosHTML = rutina.ejercicios.map((ejercicio) => `
+      <li>
+        <strong>${ejercicio.ejercicio}</strong>
+        <ul>
+          <li>Series: ${ejercicio.series}</li>
+          <li>Repeticiones: ${ejercicio.repeticiones}</li>
+        </ul>
+      </li>
+    `).join("");
+  
+    
     rutinaInfo.innerHTML = `
-      <h2>Nombre de la rutina: ${rutina.nombre}</h2>
-      <p>Descripción: ${rutina.descripcion}</p>
-      <p>Días:</p>
-      <ul>${rutina.dias.map((dia) => `<li>${dia}</li>`).join("")}</ul>
-      <!-- Agrega más información de la rutina según tu formato -->
-    `;
+    <h2>Nombre de la rutina:</h2>
+    <p>${rutina.nombre}</p>
+    <h2>Días:</h2>
+    <ul>${rutina.dias.map((dia) => `<li>${dia}</li>`).join("")}</ul>
+    <h2>Ejercicios:</h2>
+    <ul>${ejerciciosHTML}</ul>
+  `;
   }
-
+  
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-});
+})
 
 
