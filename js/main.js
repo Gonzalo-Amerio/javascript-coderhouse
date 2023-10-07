@@ -13,7 +13,7 @@ function calcularMetabolismoBasal(usuario) {
     return 88.362 + 13.397 * usuario.peso + 4.799 * usuario.altura - 5.677 * usuario.edad;
   } else if (usuario.genero === "mujer") {
     return 447.593 + 9.247 * usuario.peso + 3.098 * usuario.altura - 4.330 * usuario.edad;
-  } 
+  }
 }
 
 const nombre = document.getElementById("nombre");
@@ -23,28 +23,36 @@ const peso = document.getElementById("peso");
 const altura = document.getElementById("altura");
 
 function agregarUsuario() {
-  const nombreValue = nombre.value
+  const nombreValue = nombre.value;
   const edadValue = parseFloat(edad.value);
   const generoValue = genero.value.toLowerCase();
   const pesoValue = parseFloat(peso.value);
   const alturaValue = parseFloat(altura.value);
 
-  const usuario = new Usuario(nombreValue, edadValue, generoValue, pesoValue, alturaValue);
+  
+  const nombreValido = /^[a-zA-Z]+$/.test(nombreValue);
 
-  usuarios.push(usuario);
+  if (nombreValido) {
+    const usuario = new Usuario(nombreValue, edadValue, generoValue, pesoValue, alturaValue);
 
-  localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    usuarios.push(usuario);
 
-  const metabolismoBasal = calcularMetabolismoBasal(usuario);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-  const resultadoElement = document.getElementById("resultado");
-  resultadoElement.innerHTML = `Tu metabolismo basal es: ${Math.round(metabolismoBasal)} calorías por día.`;
+    const metabolismoBasal = calcularMetabolismoBasal(usuario);
 
+    const resultadoElement = document.getElementById("resultado");
+    resultadoElement.innerHTML = `Tu metabolismo basal es: ${Math.round(metabolismoBasal)} calorías por día.`;
 
-  document.getElementById("nombre").value = "";
-  document.getElementById("edad").value = "";
-  document.getElementById("peso").value = "";
-  document.getElementById("altura").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("edad").value = "";
+    document.getElementById("peso").value = "";
+    document.getElementById("altura").value = "";
+  } else {
+    
+    const resultadoElement = document.getElementById("resultado");
+    resultadoElement.innerHTML = "Por favor, ingrese un nombre válido (solo caracteres).";
+  }
 }
 
 function mostrarUsuarios() {
@@ -59,7 +67,6 @@ function mostrarUsuarios() {
   });
 }
 
-
 const usuariosStr = localStorage.getItem("usuarios");
 const usuarios = usuariosStr ? JSON.parse(usuariosStr) : [];
 
@@ -71,53 +78,69 @@ document.addEventListener("DOMContentLoaded", function () {
     if (nombre.value && edad.value && genero.value && peso.value && altura.value) {
       agregarUsuario();
     }
-
   });
 
   mostrarUsuariosButton.addEventListener("click", function () {
     mostrarUsuarios();
   });
 });
-document.addEventListener('DOMContentLoaded', function () {
-  
 
-function obtenerInformacionNutricional(nombreAlimento) {
-  const appId = 'b4f92dda';
-  const appKey = 'cbed25e132675463f3d6becc7eee22ea';
-  const url = `https://api.edamam.com/api/nutrition-details?app_id=${appId}&app_key=${appKey}&beta=true`;
+const rutinasJSON = {
+  rutinas: [
+    {
+      nombre: "Rutina Weider",
+      descripcion: "Una rutina de entrenamiento clásica que se centra en grupos musculares específicos en días separados.",
+      dias: ["Lunes - Pecho", "Martes - Espalda", "Miércoles - Piernas", "Jueves - Hombros", "Viernes - Brazos"],
+    },
+    {
+      nombre: "Rutina Push Pull Legs",
+      descripcion: "Una rutina que divide los ejercicios en empuje, tracción y piernas.",
+      dias: ["Lunes - Empuje", "Miércoles - Tracción", "Viernes - Piernas"],
+    },
+    {
+      nombre: "Rutina Arnold",
+      descripcion: "Una rutina de entrenamiento diseñada por Arnold Schwarzenegger.",
+      dias: ["Lunes - Pecho y Espalda", "Martes - Piernas y Hombros", "Miércoles - Descanso", "Jueves - Brazos y Espalda", "Viernes - Piernas y Hombros", "Sábado - Pecho y Brazos", "Domingo - Descanso"],
+    },
+  ],
+};
 
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`No se pudo realizar la solicitud a la API (${response.status})`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      throw error;
-    });
+let rutinaActualIndex = 0; 
+
+function mostrarRutina(index) {
+  const rutinaContainer = document.getElementById("rutinaContainer");
+  const rutinaActual = rutinasJSON.rutinas[index];
+
+  if (rutinaActual) {
+    const rutinaHTML = `
+      <h3 class="font-semibold text-lg mt-2">${rutinaActual.nombre}</h3>
+      <p>${rutinaActual.descripcion}</p>
+      <ul>
+        ${rutinaActual.dias.map((dia) => `<li>${dia}</li>`).join("")}
+      </ul>
+    `;
+
+    rutinaContainer.innerHTML = rutinaHTML;
+  } else {
+    rutinaContainer.innerHTML = "No hay más rutinas.";
+  }
 }
 
 
-document.getElementById('buscarAlimento').addEventListener('click', async function () {
-  const nombreAlimento = document.getElementById('nombreAlimento').value;
+mostrarRutina(rutinaActualIndex);
 
-  try {
-    const informacionNutricional = await obtenerInformacionNutricional(nombreAlimento);
-    
-    const resultadoNutricional = document.getElementById('resultadoNutricional');
-    resultadoNutricional.innerHTML = `Información Nutricional para ${nombreAlimento}:<br>
-      Calorías: ${Math.round(informacionNutricional.calories)}<br>
-      Proteínas: ${Math.round(informacionNutricional.totalNutrients.PROCNT.quantity)}${informacionNutricional.totalNutrients.PROCNT.unit}<br>
-      Carbohidratos: ${Math.round(informacionNutricional.totalNutrients.CHOCDF.quantity)}${informacionNutricional.totalNutrients.CHOCDF.unit}<br>
-      Grasas: ${Math.round(informacionNutricional.totalNutrients.FAT.quantity)}${informacionNutricional.totalNutrients.FAT.unit}`;
-  } catch (error) {
-    // Maneja errores, por ejemplo, si no se encuentra información sobre el alimento
-    const resultadoNutricional = document.getElementById('resultadoNutricional');
-    resultadoNutricional.innerHTML = `No se encontró información nutricional para ${nombreAlimento}.`;
-    console.error('Error en la solicitud a la API de Edamam:', error);
+document.getElementById("mostrarRutinaAnterior").addEventListener("click", () => {
+  rutinaActualIndex--;
+  if (rutinaActualIndex < 0) {
+    rutinaActualIndex = rutinasJSON.rutinas.length - 1;
   }
-});});
+  mostrarRutina(rutinaActualIndex);
+});
+
+document.getElementById("mostrarSiguienteRutina").addEventListener("click", () => {
+  rutinaActualIndex++;
+  if (rutinaActualIndex >= rutinasJSON.rutinas.length) {
+    rutinaActualIndex = 0;
+  }
+  mostrarRutina(rutinaActualIndex);
+});
