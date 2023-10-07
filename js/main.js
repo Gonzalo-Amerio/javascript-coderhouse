@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     mostrarUsuarios();
   });
 
-  // Agregar aquí el código para cargar y mostrar rutinas aleatorias
+  
   const cargarRutinaButton = document.getElementById("cargarRutinaButton");
   const rutinaInfo = document.getElementById("rutinaInfo");
   let rutinas = [];
